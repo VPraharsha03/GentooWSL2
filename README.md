@@ -2,7 +2,7 @@
 Gentoo Linux on WSL2 (Windows 10 1903 or later)
 based on [wsldl](https://github.com/yuk7/wsldl)
 
-![screenshot](https://github.com/VPraharsha3/GentooWSL/blob/master/img/screenshot.jpg)
+![screenshot](https://github.com/VPraharsha03/GentooWSL2/blob/master/img/screenshot.jpg)
 
 [![CircleCI](https://circleci.com/gh/VPraharsha03/GentooWSL.svg?style=svg)](https://circleci.com/gh/VPraharsha03/GentooWSL2)
 [![Github All Releases](http://img.shields.io/github/downloads/VPraharsha03/GentooWSL2/total.svg?style=flat-square)](https://github.com/VPraharsha03/GentooWSL2/releases/latest)
@@ -25,6 +25,30 @@ based on [wsldl](https://github.com/yuk7/wsldl)
 Exe filename is using to the instance name to register.
 If you rename it, you can register with a different name and have multiple installs.
 
+### Final steps:
+Make changes to the portage environment accordingly (**/etc/portage/make.conf** file):
+* Adjust CPU configuration and COMMON_FLAGS to match your PC architecture.
+* Adjust MAKEOPTS to the number of CPU cores (+1) to make the compilation faster
+
+To finish the Gentoo installation a new snapshot of the ebuild repository should be downloaded. A recompilation of the compiler ensures that GCC is on the most recent stable version. After updating GCC a recompilation of all programs / libraries ensures that the set optimizations take effect.
+
+```shell
+#!/bin/bash
+set -e -x
+
+# Download a snapshot of all official ebuilds
+emerge-webrsync
+
+# Upgrade the compiler and the required libtool library
+emerge --oneshot --deep sys-devel/gcc
+emerge --oneshot --usepkg=n sys-devel/libtool
+
+# Update all packages with the newly built compiler
+# This will take a long time, ~1-5 hours
+emerge --oneshot --emptytree --deep @world
+emerge --oneshot --deep @preserved-rebuild
+emerge --ask --depclean
+```
 
 ## How-to-Use(for Installed Instance)
 #### exe Usage
@@ -70,12 +94,4 @@ Usage :
 ```dos
 >Gentoo.exe clean
 
-```
-
-## How-to-Build
-GentooWSL2 can build on GNU/Linux or WSL.
-
-`curl`,`bsdtar`,`tar`(gnu) and `sudo` is required for build.
-```shell
-$ make
 ```
