@@ -22,7 +22,7 @@ based on [wsldl](https://github.com/yuk7/wsldl)
 #### 2. Extract all files in zip file to same directory
 
 #### 3.Run Gentoo.exe to Extract rootfs and Register to WSL
-Exe filename is using to the instance name to register.
+Exe filename is used as the instance name to register.
 If you rename it, you can register with a different name and have multiple installs.
 
 ### Final steps:
