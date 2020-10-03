@@ -2,7 +2,7 @@
 Gentoo Linux on WSL2 (Windows 10 1903 or later)
 based on [wsldl](https://github.com/yuk7/wsldl)
 
-![screenshot](https://github.com/VPraharsha03/GentooWSL2/blob/master/img/screenshot.jpg)
+![screenshot](https://github.com/VPraharsha03/GentooWSL2/blob/main/img/screenshot.jpg?raw=true)
 
 [![CircleCI](https://circleci.com/gh/VPraharsha03/GentooWSL.svg?style=svg)](https://circleci.com/gh/VPraharsha03/GentooWSL2)
 [![Github All Releases](http://img.shields.io/github/downloads/VPraharsha03/GentooWSL2/total.svg?style=flat-square)](https://github.com/VPraharsha03/GentooWSL2/releases/latest)
