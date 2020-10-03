@@ -1,0 +1,5 @@
+*.md
+LICENSE
+res/
+img/
+.circleci/
