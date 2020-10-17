@@ -33,8 +33,8 @@ sudo tar -xpf base.tar.xz -C rootfs
 sudo chmod +x rootfs
 
 # Delete auto-generated files
-rm rootfs/etc/resolv.conf || true
-rm rootfs/etc/wsl.conf || true
+# rm rootfs/etc/resolv.conf || true
+# rm rootfs/etc/wsl.conf || true
 
 # Enable changing /etc/resolv.conf
 # Enable extended attributes on Windows drives
