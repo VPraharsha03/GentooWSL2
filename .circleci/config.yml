@@ -4,4 +4,6 @@ jobs:
    steps:
      - checkout
      # build
-     - run: build.sh
+     - run: 
+         command: |
+           bash build.sh;
