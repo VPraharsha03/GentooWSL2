@@ -96,7 +96,7 @@ LC_MESSAGES=C
 EOF
 
 # Clean up (delete base.tar.gz)
-rm ${ROOTFS_FN}
+rm base.tar.xz
 
 # Create a tar.gz of the rootfs
 sudo tar -zcpf rootfs.tar.gz -C ./rootfs .
