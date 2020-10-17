@@ -6,4 +6,4 @@ jobs:
      # build
      - run: 
          command: |
-           bash build.sh;
+           sudo bash build.sh;
