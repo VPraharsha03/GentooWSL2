@@ -1,0 +1,7 @@
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     # build
+     - run: build.sh
