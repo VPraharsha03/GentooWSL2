@@ -7,3 +7,26 @@ jobs:
      - run: 
          command: |
            sudo bash build.sh;
+     - run: 
+        name: "get ghr"
+        command: |
+         GHR_VERSION=0.13.0
+         GHR_URL=https://github.com/tcnksm/ghr/releases/download/v${GHR_VERSION}/ghr_v${GHR_VERSION}_linux_amd64.tar.gz
+         wget "$GHR_URL" && \
+         tar xzf ghr_v${GHR_VERSION}_linux_amd64.tar.gz && \
+         sudo mv ghr_v${GHR_VERSION}_linux_amd64/ghr /usr/bin/ghr && \
+         sudo rm -r ghr_v${GHR_VERSION}_linux_amd64.tar.gz ghr_v${GHR_VERSION}_linux_amd64/
+     - run:
+        name: "Publish Release on GitHub"
+        command: |
+         VERSION=${CIRCLE_TAG}
+         ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} ~/project/Gentoo.zip
+
+workflows:
+ version: 2
+ main:
+  jobs:
+   - build:
+      filters:
+       tags:
+        only: /^[2][0-9]{7}$/
