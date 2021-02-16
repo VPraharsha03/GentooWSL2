@@ -4,7 +4,7 @@ export PATH=/usr/.bin:$PATH
 
 # Env variables for the Gentoo image
 OS_VER="stable"
-ROOTFS_VER="20210210T214503Z"
+ROOTFS_VER="20210324T214503Z"
 ROOTFS_URL="https://gentoo.osuosl.org/releases/amd64/autobuilds/current-stage3-amd64-nomultilib/stage3-amd64-${ROOTFS_VER}.tar.xz"
 
 # Environment variables for Yuk7's wsldl
