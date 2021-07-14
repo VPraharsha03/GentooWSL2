@@ -17,7 +17,7 @@ based on [wsldl](https://github.com/yuk7/wsldl)
 * Windows 10 1903 x64 ([KB4566116 update](https://www.catalog.update.microsoft.com/Search.aspx?q=KB4566116) required on 1903/09) or later.
 * Windows Subsystem for Linux feature is enabled.
 
-## Installation
+## Initial Setup (Installing Gentoo userspace)
 #### 1. [Download](https://github.com/VPraharsha03/GentooWSL2/releases) installer zip
 
 #### 2. Extract all files in zip file to same directory
@@ -26,7 +26,7 @@ based on [wsldl](https://github.com/yuk7/wsldl)
 Exe filename is used as the instance name to register.
 If you rename it, you can register with a different name and have multiple installs.
 
-### Final steps:
+## Setting up Gentoo in WSL:
 Make changes to the portage environment accordingly (**/etc/portage/make.conf** file):
 * Adjust CPU configuration and COMMON_FLAGS to match your PC architecture.
 * Adjust MAKEOPTS to the number of CPU cores (+1) to make the compilation faster
@@ -49,6 +49,39 @@ emerge --oneshot --usepkg=n sys-devel/libtool
 emerge --oneshot --emptytree --deep @world
 emerge --oneshot --deep @preserved-rebuild
 emerge --ask --depclean
+```
+
+## Finalizing:
+
+### Enabling overlays for portage:
+Portage overlays provide a method to add additional package sources to portage. Eselect provides an easy integration of overlays into portage. 
+To install Eselect:
+
+```shell
+emerge --ask app-eselect/eselect-repository
+```
+
+Finally, synchronize emerge: 
+
+```shell
+emerge --sync
+```
+
+### Using Git for portage sync:
+Sync via git which is fast, secure and up-to-date
+```shell
+emerge --ask dev-vcs/git
+```
+Make changes in portage config file:
+```shell
+sync-type = git
+sync-uri = https://github.com/gentoo-mirror/gentoo.git
+```
+
+Finally,
+```shell
+rm -r /var/db/repos/gentoo
+emerge --sync
 ```
 
 ### Limit WSL2 resource usage:
