@@ -4,11 +4,11 @@ export PATH=/usr/.bin:$PATH
 
 # Env variables for the Gentoo image
 OS_VER="stable"
-ROOTFS_VER="20210630T214504Z"
-ROOTFS_URL="https://gentoo.osuosl.org/releases/amd64/autobuilds/current-stage3-amd64-nomultilib/stage3-amd64-${ROOTFS_VER}.tar.xz"
+ROOTFS_VER="20211003T170529Z"
+ROOTFS_URL="https://gentoo.osuosl.org/releases/amd64/autobuilds/current-stage3-amd64-nomultilib-openrc/stage3-amd64-nomultilib-openrc-${ROOTFS_VER}.tar.xz"
 
 # Environment variables for Yuk7's wsldl
-LNCR_BLD="21071500"
+LNCR_BLD="21082800"
 LNCR_ZIP="icons.zip"
 LNCR_NAME="Gentoo"
 LNCR_FN=${LNCR_NAME}.exe
