@@ -89,10 +89,10 @@ emerge --sync
 en_US.UTF-8 UTF-8
 en_US ISO-8859-1
 ```
-2. Run `eselect locale list` to view the locales
-2. Run `eselect locale set 1` to set the locale
-3. Run `locale-gen` to generate the locales.
-4. Run `env-update`
+2. Run `locale-gen` to generate the locales.
+3. Run `eselect locale list` to view the locales
+4. Run `eselect locale set 1` to set the locale
+5. Run `env-update`
 
 ### Setting up users
 1. Create a new user with the following command: (replace `username` with your desired username)
