@@ -83,6 +83,32 @@ Finally,
 rm -r /var/db/repos/gentoo
 emerge --sync
 ```
+### Setting up Locales
+1. Open `/etc/locale.gen` file and add the locales you need. For example
+```shell
+en_US.UTF-8 UTF-8
+en_US ISO-8859-1
+```
+2. Run `locale-gen` to generate the locales.
+3. Run `eselect locale list` to view the locales
+4. Run `eselect locale set 1` to set the locale
+5. Run `env-update`
+
+### Setting up users
+1. Create a new user with the following command: (replace `username` with your desired username)
+```shell
+useradd -m -G wheel,audio,video,portage,usb,cdrom -s /bin/bash username
+```
+2. Set the password for the user
+```shell
+passwd username
+```
+3. Set the default user to the new user in WSL2
+```shell
+# /etc/wsl.conf
+[user]
+default=username
+```
 
 ### Limit WSL2 resource usage:
 Create a global configuration for all installed WSL2 Linux disributions, named .wslconfig in your user profile folder. This is necessary to set a maximum size limit of the RAM WSL will use. Sometimes, Linux Kernel may use free memory as cache and will eat away RAM of host. 
@@ -101,6 +127,7 @@ Restart WSL from Powershell with admin rights
 ```powershell
 Restart-Service LxssManager
 ```
+
 
 ## How-to-Use(for Installed Instance)
 #### exe Usage
