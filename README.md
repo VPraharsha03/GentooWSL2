@@ -17,12 +17,15 @@ based on [wsldl](https://github.com/yuk7/wsldl)
 * Windows 10 1903 x64 ([KB4566116 update](https://www.catalog.update.microsoft.com/Search.aspx?q=KB4566116) required on 1903/09) or later.
 * Windows Subsystem for Linux feature is enabled.
 
+## Why WSL2?
+The main reason for choosing WSL2 is because of it's [improved file system performance](#useful-links). For the best overall experience it is recommended to use WSL2 with it's local EXT4 filesystem. Portage and it's related operations work perfectly on WSL2 for the fact that WSL2 uses a real linux kernel. However it is possible to set up Gentoo on WSL1, but there are certain [caveats](#useful-links) of doing so.
+
 ## Initial Setup (Installing Gentoo userspace)
 #### 1. [Download](https://github.com/VPraharsha03/GentooWSL2/releases) installer zip
 
 #### 2. Extract all files in zip file to same directory
 
-#### 3.Run Gentoo.exe to Extract rootfs and Register to WSL
+#### 3. Run Gentoo.exe to Extract rootfs and Register to WSL
 Exe filename is used as the instance name to register.
 If you rename it, you can register with a different name and have multiple installs.
 
@@ -174,3 +177,8 @@ Usage :
 >Gentoo.exe clean
 
 ```
+
+### Useful Links:
+- [Official article on Gentoo Wiki](https://wiki.gentoo.org/wiki/Gentoo_in_WSL)
+- [Comparing WSL1 and WSL2 filesystem I/O performance on local and host files.](https://vxlabs.com/2019/12/06/wsl2-io-measurements/)
+- [Refine Gentoo on Windows Subsystem for Linux](https://leo3418.github.io/2022/02/28/gentoo-wsl-perfection.html)
