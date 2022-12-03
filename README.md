@@ -1,6 +1,7 @@
 # GentooWSL2
-Gentoo Linux on WSL2 (Windows 10 1903 or later)
-based on [wsldl](https://github.com/yuk7/wsldl)
+<img src="https://socialify.git.ci/VPraharsha03/GentooWSL2/image?description=1&descriptionEditable=Gentoo%20on%20Windows%20Subsystem%20for%20Linux&font=Bitter&forks=1&issues=1&logo=https%3A%2F%2Fwww.gentoo.org%2Fassets%2Fimg%2Flogo%2Fgentoo-logo.svg&name=1&pattern=Signal&pulls=1&stargazers=1&theme=Light" alt="GentooWSL2" width="800" height="400" />
+
+Gentoo Linux on WSL2 (Windows 10 1903 or later) based on [wsldl](https://github.com/yuk7/wsldl)
 
 ![screenshot](https://github.com/VPraharsha03/GentooWSL2/blob/main/img/screenshot.jpg?raw=true)
 
