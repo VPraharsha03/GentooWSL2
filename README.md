@@ -1,5 +1,5 @@
 # GentooWSL2
-<p align="center"><img src="https://socialify.git.ci/VPraharsha03/GentooWSL2/image?description=1&descriptionEditable=Gentoo%20on%20Windows%20Subsystem%20for%20Linux&font=Bitter&forks=1&issues=1&logo=https%3A%2F%2Fwww.gentoo.org%2Fassets%2Fimg%2Flogo%2Fgentoo-logo.svg&name=1&pattern=Signal&pulls=1&stargazers=1&theme=Light" alt="GentooWSL2" width="800" height="400" /></p>
+<p align="center"><img src="https://socialify.git.ci/VPraharsha03/GentooWSL2/image?description=1&descriptionEditable=Gentoo%20on%20Windows%20Subsystem%20for%20Linux.&font=Bitter&forks=1&issues=1&logo=https%3A%2F%2Fwww.gentoo.org%2Fassets%2Fimg%2Flogo%2Fgentoo-signet.svg&name=1&pattern=Signal&pulls=1&stargazers=1&theme=Auto" alt="GentooWSL2" width="800" height="400" /></p>
 
 <!--Gentoo Linux on WSL2 (Windows 10 1903 or later) based on [wsldl](https://github.com/yuk7/wsldl)-->
 <p align="center">Gentoo Linux on WSL2 (Windows 10 1903 or later) based on <a href="https://github.com/yuk7/wsldl">wsldl</a></p>
@@ -7,13 +7,20 @@
 <!--![screenshot](https://github.com/VPraharsha03/GentooWSL2/blob/main/img/screenshot.jpg?raw=true)-->
 <p align="center"><img src="https://github.com/VPraharsha03/GentooWSL2/blob/main/img/screenshot.jpg?raw=true"/></p>
 
-![AutomatedReleases](https://img.shields.io/badge/-Automated%20Releases-success?logo=circleci&style=svg)
-[![CircleCI](https://circleci.com/gh/VPraharsha03/GentooWSL2.svg?style=svg)](https://app.circleci.com/pipelines/github/VPraharsha03/GentooWSL2?status=failing&status=on_hold&status=queued&status=running&status=success)
-[![Github All Releases](http://img.shields.io/github/downloads/VPraharsha03/GentooWSL2/total.svg?style=flat-square)](https://github.com/VPraharsha03/GentooWSL2/releases/latest)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-![License](https://img.shields.io/github/license/yuk7/AlpineWSL.svg?style=flat-square)
+<p align="center">
+    <a href="" alt="AutomatedReleases">
+        <img src="https://img.shields.io/badge/-Automated%20Releases-success?logo=circleci&style=svg" /></a>
+    <a href="https://app.circleci.com/pipelines/github/VPraharsha03/GentooWSL2?status=failing&status=on_hold&status=queued&status=running&status=success" alt="CircleCI">
+        <img src="https://circleci.com/gh/VPraharsha03/GentooWSL2.svg?style=svg" /></a>
+    <a href="https://github.com/VPraharsha03/GentooWSL2/releases/latest" alt="Github All Releases">
+        <img src="http://img.shields.io/github/downloads/VPraharsha03/GentooWSL2/total.svg?style=flat-square" /></a>
+    <a href="http://makeapullrequest.com" alt="PRs Welcome">
+        <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" /></a>
+    <a href="">
+        <img src="https://img.shields.io/github/license/yuk7/AlpineWSL.svg?style=flat-square" alt="License"></a>
+</p>
 
-### [Download](https://github.com/VPraharsha03/GentooWSL2/releases)
+### 📦[Download](https://github.com/VPraharsha03/GentooWSL2/releases)
 
 
 ## Requirements
