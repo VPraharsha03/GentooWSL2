@@ -85,7 +85,17 @@ Sync via git which is fast, secure and up-to-date
 ```shell
 emerge --ask dev-vcs/git
 ```
-Make changes in portage config file:
+Make changes in portage config file under `/etc/portage/repos.conf/gentoo.conf` that holds the configuration for the main gentoo repository:
+
+Replace, 
+
+```shell
+sync-type = rsync
+sync-uri = rsync://rsync.de.gentoo.org/gentoo-portage/
+```
+
+with
+
 ```shell
 sync-type = git
 sync-uri = https://github.com/gentoo-mirror/gentoo.git
@@ -93,9 +103,12 @@ sync-uri = https://github.com/gentoo-mirror/gentoo.git
 
 Finally,
 ```shell
-rm -r /var/db/repos/gentoo
+rm -r /var/db/repos/gentoo # delete the old rsync-managed repository
 emerge --sync
 ```
+
+Subsequent syncs should be now faster.
+
 ### Setting up Locales
 1. Open `/etc/locale.gen` file and add the locales you need. For example
 ```shell
@@ -116,12 +129,23 @@ useradd -m -G wheel,audio,video,portage,usb,cdrom -s /bin/bash username
 ```shell
 passwd username
 ```
-3. Set the default user to the new user in WSL2
+3. Set the password for the root user
+```
+passwd root
+```
+4. Set the default user to the new user in WSL2
 ```shell
 # /etc/wsl.conf
 [user]
 default=username
 ```
+
+### Setting up sudo
+```shell
+emerge --ask app-admin/sudo
+```
+
+Uncomment `# %wheel ALL=(ALL) ALL` line in `/etc/sudoers` using `visudo` to allow users added to wheel group to have priviliges.
 
 ### Limit WSL2 resource usage:
 Create a global configuration for all installed WSL2 Linux disributions, named .wslconfig in your user profile folder. This is necessary to set a maximum size limit of the RAM WSL will use. Sometimes, Linux Kernel may use free memory as cache and will eat away RAM of host. 
