@@ -55,7 +55,7 @@ emerge-webrsync
 
 # Upgrade the compiler and the required libtool library
 emerge --oneshot --deep sys-devel/gcc
-emerge --oneshot --usepkg=n sys-devel/libtool
+emerge --ask --oneshot --usepkg=n dev-build/libtool
 
 # Update all packages with the newly built compiler
 # This will take a long time, ~1-5 hours
@@ -85,26 +85,19 @@ Sync via git which is fast, secure and up-to-date
 ```shell
 emerge --ask dev-vcs/git
 ```
-Make changes in portage config file under `/etc/portage/repos.conf/gentoo.conf` that holds the configuration for the main gentoo repository:
-
-Replace, 
-
+First disable the gentoo repository: 
 ```shell
-sync-type = rsync
-sync-uri = rsync://rsync.de.gentoo.org/gentoo-portage/
+eselect repository disable gentoo
 ```
-
-with
-
+Then enable the gentoo repository, using git as the sync type: 
 ```shell
-sync-type = git
-sync-uri = https://github.com/gentoo-mirror/gentoo.git
+eselect repository enable gentoo git
 ```
-
 Finally,
 ```shell
-rm -r /var/db/repos/gentoo # delete the old rsync-managed repository
-emerge --sync
+mv /var/db/repos/gentoo /var/db/repos/gentoo.old-rsync 
+emaint sync -r gentoo 
+rm -r /var/db/repos/gentoo.old-rsync 
 ```
 
 Subsequent syncs should be now faster.

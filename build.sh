@@ -59,9 +59,9 @@ cat <<EOF > rootfs/etc/portage/make.conf
 # No GUI (-X -gtk), only english error messages (-nls)
 USE="-X -gtk -nls"
 
-# Enable python 3.7 and set 3.6 as default
-PYTHON_TARGETS="python3_6 python3_7"
-PYTHON_SINGLE_TARGET="python3_6"
+# Enable python 3.12 and set it as default
+PYTHON_TARGETS="python3_12"
+PYTHON_SINGLE_TARGET="python3_12"
 
 # Define targets for QEMU
 QEMU_SOFTMMU_TARGETS="aarch64 arm i386 riscv32 riscv64 x86_64"
@@ -77,12 +77,12 @@ FEATURES="-ipc-sandbox -pid-sandbox -mount-sandbox -network-sandbox"
 EMERGE_DEFAULT_OPTS="--ask --complete-graph"
 
 # Enable optimizations for the used CPU
-#COMMON_FLAGS="-march=haswell -O2 -pipe"
+#COMMON_FLAGS="-march=native -O2 -pipe"
 #CHOST="x86_64-pc-linux-gnu"
-#CFLAGS="${COMMON_FLAGS}"
-#CXXFLAGS="${COMMON_FLAGS}"
-#FCFLAGS="${COMMON_FLAGS}"
-#FFLAGS="${COMMON_FLAGS}"
+#CFLAGS="\${COMMON_FLAGS}"
+#CXXFLAGS="\${COMMON_FLAGS}"
+#FCFLAGS="\${COMMON_FLAGS}"
+#FFLAGS="\${COMMON_FLAGS}"
 #MAKEOPTS="-j5"
 
 # NOTE: This stage was built with the bindist Use flag enabled
