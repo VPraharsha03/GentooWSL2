@@ -19,8 +19,15 @@ jobs:
      - run:
         name: "Publish Release on GitHub"
         command: |
+         sudo bash source env.sh
          VERSION=$(date +'%Y%m%d')
-         ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${VERSION} ~/project/dist/Gentoo.zip
+         body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
+         body="${body/ROOTFS/${ROOTFS_VER}}"
+         body="${body/LNCR_BLD/${LNCR_BLD}}"
+         body="${body/VERSION/${VERSION}}"
+         body="${body/CIRCLE_PROJECT_USERNAME/${CIRCLE_PROJECT_USERNAME}}"
+         body="${body/CIRCLE_PROJECT_REPONAME/${CIRCLE_PROJECT_REPONAME}}"
+         ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -b "${body}" ${VERSION} ~/project/dist/Gentoo.zip
 
 workflows:
  version: 2
