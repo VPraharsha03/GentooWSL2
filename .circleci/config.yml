@@ -1,39 +1,88 @@
+version: 2.1
+
 jobs:
- build:
-   machine: true
-   steps:
-     - checkout
-     # build
-     - run: 
-         command: |
-           sudo bash build.sh;
-     - run: 
-        name: "get ghr"
-        command: |
-         GHR_VERSION=0.13.0
-         GHR_URL=https://github.com/tcnksm/ghr/releases/download/v${GHR_VERSION}/ghr_v${GHR_VERSION}_linux_amd64.tar.gz
-         wget "$GHR_URL" && \
-         tar xzf ghr_v${GHR_VERSION}_linux_amd64.tar.gz && \
-         sudo mv ghr_v${GHR_VERSION}_linux_amd64/ghr /usr/bin/ghr && \
-         sudo rm -r ghr_v${GHR_VERSION}_linux_amd64.tar.gz ghr_v${GHR_VERSION}_linux_amd64/
-     - run:
-        name: "Publish Release on GitHub"
-        command: |
-         source ./env.sh
-         VERSION=$(date +'%Y%m%d')
-         body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
-         body="${body/ROOTFS/${ROOTFS_VER}}"
-         body="${body/LNCR_BLD/${LNCR_BLD}}"
-         body="${body/VERSION/${VERSION}}"
-         body="${body/CIRCLE_PROJECT_USERNAME/${CIRCLE_PROJECT_USERNAME}}"
-         body="${body/CIRCLE_PROJECT_REPONAME/${CIRCLE_PROJECT_REPONAME}}"
-         ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -b "${body}" ${VERSION} ~/project/dist/Gentoo.zip
+  build:
+    machine: true
+    steps:
+      - checkout
+      # build
+      - run: 
+          command: |
+            sudo bash build.sh;
+      - run: 
+          name: "get ghr"
+          command: |
+            GHR_VERSION=0.13.0
+            GHR_URL=https://github.com/tcnksm/ghr/releases/download/v${GHR_VERSION}/ghr_v${GHR_VERSION}_linux_amd64.tar.gz
+            wget "$GHR_URL" && \
+            tar xzf ghr_v${GHR_VERSION}_linux_amd64.tar.gz && \
+            sudo mv ghr_v${GHR_VERSION}_linux_amd64/ghr /usr/bin/ghr && \
+            sudo rm -r ghr_v${GHR_VERSION}_linux_amd64.tar.gz ghr_v${GHR_VERSION}_linux_amd64/
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            source ./env.sh
+            VERSION=$(date +'%Y%m%d')
+            body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
+            body="${body/ROOTFS/${ROOTFS_VER}}"
+            body="${body/LNCR_BLD/${LNCR_BLD}}"
+            body="${body/VERSION/${VERSION}}"
+            body="${body/CIRCLE_PROJECT_USERNAME/${CIRCLE_PROJECT_USERNAME}}"
+            body="${body/CIRCLE_PROJECT_REPONAME/${CIRCLE_PROJECT_REPONAME}}"
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -b "${body}" ${VERSION} ~/project/dist/Gentoo.zip
+
+  scrape_latest_version:
+    machine: true
+    steps:
+      - run:
+          name: "Scrape Latest Version and Update ROOTFS_VER and LNCR_BLD"
+          command: |
+            # Load the ROOTFS_VER and LNCR_BLD from env.sh
+            source ./env.sh
+            
+            # Scrape the latest version file for ROOTFS
+            wget -q -O latest-stage3.txt https://gentoo.osuosl.org/releases/amd64/autobuilds/current-stage3-amd64-nomultilib-openrc/latest-stage3-amd64-nomultilib-openrc.txt
+            
+            # Extract the latest version timestamp from the file
+            LATEST_VERSION=$(grep -o '[0-9]\{8\}T[0-9]\{6\}Z' latest-stage3.txt | head -n 1)
+            
+            # Compare with ROOTFS_VER
+            if [ "$LATEST_VERSION" != "$ROOTFS_VER" ]; then
+              echo "New ROOTFS version found: $LATEST_VERSION"
+              # Update ROOTFS_VER in env.sh
+              echo "export ROOTFS_VER=${LATEST_VERSION}" > ./env.sh
+              echo "Updated ROOTFS_VER to: ${LATEST_VERSION}"
+            else
+              echo "No new ROOTFS version found. Current version is up to date: $ROOTFS_VER"
+            fi
+            
+            # Scrape the latest wsldl version from GitHub releases
+            LATEST_WSLDL_VERSION=$(curl -s https://api.github.com/repos/yuk7/wsldl/releases/latest | grep -o '"tag_name": "[^"]*' | grep -o '[^"]*$')
+            
+            # Update LNCR_BLD in env.sh
+            if [ "$LATEST_WSLDL_VERSION" != "$LNCR_BLD" ]; then
+              echo "New wsldl version found: $LATEST_WSLDL_VERSION"
+              echo "export LNCR_BLD=${LATEST_WSLDL_VERSION}" >> ./env.sh
+              echo "Updated LNCR_BLD to: ${LATEST_WSLDL_VERSION}"
+            else
+              echo "No new wsldl version found. Current version is up to date: $LNCR_BLD"
+            fi
 
 workflows:
- version: 2
- main:
-  jobs:
-   - build:
-      filters:
-       tags:
-        ignore: /.*/
+  version: 2
+  main:
+    jobs:
+      - scrape_latest_version:
+          filters:
+            branches:
+              only:
+                - main
+      - build:
+          requires:
+            - scrape_latest_version
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0"  # This cron expression means every Sunday at midnight
+          filters:
+            branches:
+              only:
