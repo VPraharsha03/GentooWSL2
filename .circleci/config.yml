@@ -35,12 +35,11 @@ jobs:
   scrape_latest_version:
     machine: true
     steps:
+      - checkout
       - run:
           name: "Scrape Latest Version and Update ROOTFS_VER and LNCR_BLD"
           command: |
             # Load the ROOTFS_VER and LNCR_BLD from env.sh
-            ls -la
-            pwd
             source ./env.sh
             
             # Scrape the latest version file for ROOTFS
