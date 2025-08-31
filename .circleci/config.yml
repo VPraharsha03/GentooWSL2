@@ -1,41 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
-    machine: true
-    steps:
-      - attach_workspace:
-          at: .
-      - checkout:
-          clean: true
-      # build
-      - run: 
-          command: |
-            source ./env.sh
-            sudo bash build.sh;
-      - run: 
-          name: "get ghr"
-          command: |
-            GHR_VERSION=0.13.0
-            GHR_URL=https://github.com/tcnksm/ghr/releases/download/v${GHR_VERSION}/ghr_v${GHR_VERSION}_linux_amd64.tar.gz
-            wget "$GHR_URL" && \
-            tar xzf ghr_v${GHR_VERSION}_linux_amd64.tar.gz && \
-            sudo mv ghr_v${GHR_VERSION}_linux_amd64/ghr /usr/bin/ghr && \
-            sudo rm -r ghr_v${GHR_VERSION}_linux_amd64.tar.gz ghr_v${GHR_VERSION}_linux_amd64/
-      - run:
-          name: "Publish Release on GitHub"
-          command: |
-            source ./env.sh
-            VERSION=$(date +'%Y%m%d')
-            body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
-            body="${body/ROOTFS/${ROOTFS_VER}}"
-            body="${body/LNCR_BLD/${LNCR_BLD}}"
-            body="${body/VERSION/${VERSION}}"
-            body="${body/CIRCLE_PROJECT_USERNAME/${CIRCLE_PROJECT_USERNAME}}"
-            body="${body/CIRCLE_PROJECT_REPONAME/${CIRCLE_PROJECT_REPONAME}}"
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -b "${body}" ${VERSION} ~/project/dist/Gentoo.zip
-
-  scrape_latest_version:
+  scrape_latest_version_and_build:
     machine: true
     steps:
       - checkout
@@ -82,19 +48,30 @@ jobs:
               #git push origin main
             #fi
 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - env.sh  
+            if [ "$LATEST_VERSION" != "$ROOTFS_VER" ]; then
+              source ./env.sh
+              sudo bash build.sh;
+              GHR_VERSION=0.13.0
+              GHR_URL=https://github.com/tcnksm/ghr/releases/download/v${GHR_VERSION}/ghr_v${GHR_VERSION}_linux_amd64.tar.gz
+              wget "$GHR_URL" && \
+              tar xzf ghr_v${GHR_VERSION}_linux_amd64.tar.gz && \
+              sudo mv ghr_v${GHR_VERSION}_linux_amd64/ghr /usr/bin/ghr && \
+              sudo rm -r ghr_v${GHR_VERSION}_linux_amd64.tar.gz ghr_v${GHR_VERSION}_linux_amd64/
+              VERSION=$(date +'%Y%m%d')
+              body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
+              body="${body/ROOTFS/${ROOTFS_VER}}"
+              body="${body/LNCR_BLD/${LNCR_BLD}}"
+              body="${body/VERSION/${VERSION}}"
+              body="${body/CIRCLE_PROJECT_USERNAME/${CIRCLE_PROJECT_USERNAME}}"
+              body="${body/CIRCLE_PROJECT_REPONAME/${CIRCLE_PROJECT_REPONAME}}"
+              ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -b "${body}" ${VERSION} ~/project/dist/Gentoo.zip
+            fi
 
 workflows:
   main:
     jobs:
-      - scrape_latest_version:
+      - scrape_latest_version_and_build:
           filters:
             branches:
               only:
                 - main
-      - build:
-          requires:
-            - scrape_latest_version
