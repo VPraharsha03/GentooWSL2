@@ -21,9 +21,9 @@ jobs:
             if [ "$LATEST_VERSION" != "$ROOTFS_VER" ]; then
               echo "New ROOTFS version found: $LATEST_VERSION"
               # Update ROOTFS_VER in env.sh
-              echo "export ROOTFS_VER=${LATEST_VERSION}" > ./env.sh
-              echo "Updated ROOTFS_VER to: ${LATEST_VERSION}"
+              sed -i -e "/^ROOTFS_VER=/s|.*|ROOTFS_VER=${LATEST_VERSION}|" env.sh
               echo "${ROOTFS_URL}"
+              echo "Updated ROOTFS_VER to: ${LATEST_VERSION}"
             else
               echo "No new ROOTFS version found. Current version is up to date: $ROOTFS_VER"
             fi
@@ -34,7 +34,7 @@ jobs:
             # Update LNCR_BLD in env.sh
             if [ "$LATEST_WSLDL_VERSION" != "$LNCR_BLD" ]; then
               echo "New wsldl version found: $LATEST_WSLDL_VERSION"
-              echo "export LNCR_BLD=${LATEST_WSLDL_VERSION}" >> ./env.sh
+              sed -i -e "/^LNCR_BLD=/s|.*|LNCR_BLD=${LATEST_WSLDL_VERSION}|" env.sh
               echo "Updated LNCR_BLD to: ${LATEST_WSLDL_VERSION}"
             else
               echo "No new wsldl version found. Current version is up to date: $LNCR_BLD"
