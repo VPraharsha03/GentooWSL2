@@ -5,6 +5,9 @@ jobs:
     machine: true
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:FdHJWY2eTACG2+NO2VlPHeXAqhxnxVNX2puDxAWa9E0"
       - run:
           name: "Scrape Latest Version and Update ROOTFS_VER and LNCR_BLD"
           command: |
