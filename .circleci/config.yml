@@ -22,7 +22,6 @@ jobs:
           name: "Publish Release on GitHub"
           command: |
             ls -l
-            chmod +r ./env.sh
             source ./env.sh
             VERSION=$(date +'%Y%m%d')
             body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
