@@ -23,6 +23,7 @@ jobs:
               # Update ROOTFS_VER in env.sh
               echo "export ROOTFS_VER=${LATEST_VERSION}" > ./env.sh
               echo "Updated ROOTFS_VER to: ${LATEST_VERSION}"
+              echo "${ROOTFS_URL}"
             else
               echo "No new ROOTFS version found. Current version is up to date: $ROOTFS_VER"
             fi
