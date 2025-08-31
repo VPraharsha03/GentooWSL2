@@ -4,10 +4,13 @@ jobs:
   build:
     machine: true
     steps:
+      - attach_workspace:
+          at: .
       - checkout
       # build
       - run: 
           command: |
+            source ./env.sh
             sudo bash build.sh;
       - run: 
           name: "get ghr"
@@ -21,7 +24,6 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            ls -la
             source ./env.sh
             VERSION=$(date +'%Y%m%d')
             body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
@@ -69,6 +71,20 @@ jobs:
             else
               echo "No new wsldl version found. Current version is up to date: $LNCR_BLD"
             fi
+
+            # Update env.sh in repo
+            if [ "$LATEST_VERSION" != "$ROOTFS_VER" ] || [ "$LATEST_WSLDL_VERSION" != "$LNCR_BLD" ]; then
+              git config --global user.email "${GIT_EMAIL}"
+              git config --global user.name "${GIT_USER}"
+              git add ./env.sh
+              git commit -m "scrape_latest_version: updated env.sh [ci skip]"
+              git push origin main
+            fi
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - env.sh  
 
 workflows:
   main:
