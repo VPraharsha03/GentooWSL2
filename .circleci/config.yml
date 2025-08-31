@@ -6,7 +6,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - checkout
+      - checkout:
+          clean: true
       # build
       - run: 
           command: |
