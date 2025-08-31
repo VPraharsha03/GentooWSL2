@@ -21,7 +21,7 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            ls -l
+            ls -la
             source ./env.sh
             VERSION=$(date +'%Y%m%d')
             body='![Downloads](https://img.shields.io/github/downloads/CIRCLE_PROJECT_USERNAME/CIRCLE_PROJECT_REPONAME/VERSION/total)<br>Rootfs ver. ROOTFS<br>Launcher ver. LNCR_BLD</br>'
@@ -39,6 +39,8 @@ jobs:
           name: "Scrape Latest Version and Update ROOTFS_VER and LNCR_BLD"
           command: |
             # Load the ROOTFS_VER and LNCR_BLD from env.sh
+            ls -la
+            pwd
             source ./env.sh
             
             # Scrape the latest version file for ROOTFS
