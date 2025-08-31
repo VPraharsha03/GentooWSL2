@@ -73,13 +73,13 @@ jobs:
             fi
 
             # Update env.sh in repo
-            if [ "$LATEST_VERSION" != "$ROOTFS_VER" ] || [ "$LATEST_WSLDL_VERSION" != "$LNCR_BLD" ]; then
-              git config --global user.email "${GIT_EMAIL}"
-              git config --global user.name "${GIT_USER}"
-              git add ./env.sh
-              git commit -m "scrape_latest_version: updated env.sh [ci skip]"
-              git push origin main
-            fi
+            #if [ "$LATEST_VERSION" != "$ROOTFS_VER" ] || [ "$LATEST_WSLDL_VERSION" != "$LNCR_BLD" ]; then
+              #git config --global user.email "${GIT_EMAIL}"
+              #git config --global user.name "${GIT_USER}"
+              #git add ./env.sh
+              #git commit -m "scrape_latest_version: updated env.sh [ci skip]"
+              #git push origin main
+            #fi
 
       - persist_to_workspace:
           root: .
