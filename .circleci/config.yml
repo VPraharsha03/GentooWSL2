@@ -69,7 +69,6 @@ jobs:
             fi
 
 workflows:
-  version: 2
   main:
     jobs:
       - scrape_latest_version:
@@ -80,9 +79,3 @@ workflows:
       - build:
           requires:
             - scrape_latest_version
-    triggers:
-      - schedule:
-          cron: "0 0 * * 0"  # This cron expression means every Sunday at midnight
-          filters:
-            branches:
-              only:
