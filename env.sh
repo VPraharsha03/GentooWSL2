@@ -1,6 +1,6 @@
 # Env variables for the Gentoo image
 OS_VER="stable"
-ROOTFS_VER=20260121T111559Z
+ROOTFS_VER=20260125T170113Z
 ROOTFS_URL="https://gentoo.osuosl.org/releases/amd64/autobuilds/current-stage3-amd64-nomultilib-openrc/stage3-amd64-nomultilib-openrc-${ROOTFS_VER}.tar.xz"
 
 # Environment variables for Yuk7's wsldl
